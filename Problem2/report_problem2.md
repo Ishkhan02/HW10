@@ -1,21 +1,5 @@
 # Problem 2 – Bank Account (Mutex vs Spinlock, Short vs Long Critical Section)
 
-## How to compile
 
-cd HW10/Problem2
-clang -Wall -Wextra -pthread -o bank_account bank_account.c
-
-## How to run (4 cases)
-
-Use time to roughly measure runtime:
-
-/usr/bin/time -p ./bank_account mutex short
-/usr/bin/time -p ./bank_account spin short
-/usr/bin/time -p ./bank_account mutex long
-/usr/bin/time -p ./bank_account spin long
-
-Record the elapsed time and final balance for each case, and take screenshots.
-
-## Short answer
 
 With short critical sections, spinlocks can perform well because threads spin only briefly before acquiring the lock, avoiding the overhead of kernel-level context switches. With long critical sections, spinning is worse: waiting threads waste CPU cycles while the lock holder keeps the lock for a long time (especially with usleep inside), so mutexes are preferable because they put waiting threads to sleep and let the scheduler run other work.
